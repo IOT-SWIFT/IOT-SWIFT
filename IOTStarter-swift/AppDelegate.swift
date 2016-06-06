@@ -13,10 +13,15 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        UILabel.appearance().font = UIFont(name: "HelveticaNeue-Light", size: 17.0)
+        UIApplication.sharedApplication().idleTimerDisabled = true
+        // Initialize some application settings
         return true
     }
 
@@ -106,6 +111,165 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    func addLogMessage(textValue: String) {
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            GlobalVariable.messageLog.append(textValue)
+            print("\(textValue)")
+        })
+    }
+        
+}
+
+extension AppDelegate: InvocationComplete {
+    func onSuccess(invocationContext: NSObject) {
+        print("%@:%d - invocationContext=%@", #function, #line,invocationContext)
+        if (invocationContext.isKindOfClass(MqttClient)) {
+            // context is Mqtt Publish
+        }
+        else if (invocationContext.isKindOfClass(NSString)) {
+            
+            let contextString: String = String(invocationContext)
+            print("\(contextString)")
+            if (contextString == "connect") {
+                self.handleConnectSuccess()
+            }
+            else if (contextString == "disconnect") {
+                self.handleDisconnectSuccess()
+            }
+            else {
+                var parts: [AnyObject] = contextString.componentsSeparatedByString(":")
+                if (parts[0] as! String == "subscribe") {
+                    // Context is Mqtt Subscribe
+                    print("Successfully subscribed to topic: %@", parts[1])
+                }
+                else if (parts[0] as! String == "unsubscribe") {
+                    // Context is Mqtt Unsubscribe
+                    print("Successfully unsubscribed from topic: %@", parts[1])
+                    
+                }
+            }
+        }
+    }
+    
+    func onFailure(invocationContext: NSObject!, errorCode: Int32, errorMessage: String!) {
+        print("%@:%d - invocationContext=%@", #function, #line,invocationContext)
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            let message: String = "Failed to connect to IoT. Reason Code: \(errorCode)"
+            print(message)
+            self.connectMQTTServer()
+        })
+    }
+    
+    
+    func handleConnectSuccess() {
+        // context is Mqtt Connect
+        // Enable publishing of sensor data
+        print("Successfully connected to IoT Messaging Server")
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            GlobalVariable.isConnected = true
+            let messenger: Messenger = Messenger.sharedMessenger() as! Messenger
+            messenger.subscribe(TopicFactory.getCommandTopic("+"), qos: 2)
+        })
+    }
+    func handleDisconnectSuccess() {
+        // Context is Mqtt Disconnect
+        // Disable publishing of sensor data
+        print("Successfully disconnected from IoT Messaging Server")
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            GlobalVariable.isConnected = false
+        })
+    }
+    
+    func connectMQTTServer(){
+        let messenger: Messenger = Messenger.sharedMessenger() as! Messenger
+        let serverAddress: String = String(format: GlobalVariable.IOTServerAddress, GlobalVariable.organization)
+        let clientID: String = String(format: GlobalVariable.IOTClientID, GlobalVariable.organization, GlobalVariable.IOTDeviceType, GlobalVariable.deviceID)
+        
+        messenger .connectWithHost(serverAddress, port: GlobalVariable.port, clientId: clientID, userName: GlobalVariable.userName , password: GlobalVariable.authToken , timeout: GlobalVariable.timeout, cleanSession: GlobalVariable.cleanSession, keepAliveInterval: GlobalVariable.keepAliveInterval)
+    }
 
 }
+
+extension AppDelegate:MqttCallbacks{
+    func onConnectionLost(invocationContext: NSObject, errorMessage: String) {
+        print("%@:%d entered", #function, #line)
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            GlobalVariable.isConnected = false
+            self.connectMQTTServer()
+            GlobalVariable.isConnected = true
+        })
+    }
+    
+    func onMessageArrived(invocationContext: NSObject, message: MqttMessage) {
+        print("%@:%d entered", #function, #line)
+        if let payload:String =  NSString(bytes: message.payload, length: Int(message.payloadLength), encoding: NSUTF8StringEncoding) as? String  {// String(CString: UnsafePointer<CChar>(message.payload), encoding: NSASCIIStringEncoding) {
+            let topic: String = message.destinationName
+            self.routeMessage(topic, payload: payload)
+            // Local Notifications when a message is received while app is running in background.
+            dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            })
+        }
+    }
+    func onMessageDelivered(invocationContext: NSObject!, messageId msgId: Int32) {
+        
+    }
+    /** Parse the message topic and call the appropriate method based on the command type.
+     *  @param topic The topic string the message was received on
+     *  @param payload The message payload
+     */
+    
+    func routeMessage(topic: String, payload: String) {
+        // topicParts: @"iot-2/cmd/%@/fmt/%@"
+        //   [0] = iot-2
+        //   [1] = cmd
+        //   [2] = <command>
+        //   [3] = fmt
+        //   [4] = <format>
+        let topicParts: [AnyObject] = topic.componentsSeparatedByString("/")
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            print("Topic : \(topic)")
+            self.processTextMessage(payload)
+        })
+    }
+    func getMessageBody(payload: String) -> NSDictionary? {
+        print("\(payload)")
+        do {
+            let json: NSDictionary = try NSJSONSerialization.JSONObjectWithData(payload.dataUsingEncoding(NSUTF8StringEncoding)!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+            let body: NSDictionary? = (json["d"] as! NSDictionary)
+            if body != nil {
+                return body!
+                
+            }else{
+                print("Error in JSON: \"d\" object not found")
+                
+            }
+            
+        }catch{
+            print("Error parsing JSON: %@", error)
+        }
+        return nil
+    }
+    
+    /** Process a color command message.
+     *  @param payload The message payload
+     */
+    /** Process a text command message.
+     *  @param payload The message payload
+     */
+    
+    func processTextMessage(payload: String) {
+        var body: NSDictionary?
+        body = self.getMessageBody(payload)
+        if let bodyText = body {
+            let textValue: String = (bodyText["text"] as! String)
+            if textValue != "" {
+                GlobalVariable.messageLog.append(textValue)
+                print(textValue)
+                
+            }
+        }
+    }
+}
+
 

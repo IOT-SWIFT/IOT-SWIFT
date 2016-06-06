@@ -13,7 +13,6 @@
 //  IoTstarter
 //
 
-#import "AppDelegate.h"
 #import "Constants.h"
 #import "IoTProfile.h"
 

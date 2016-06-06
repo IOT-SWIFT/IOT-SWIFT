@@ -18,12 +18,12 @@
 @implementation Constants
 
 /** File name for storing application properties on device */
-NSString * const IOTArchiveFileName   = @"/IoTstarter.archive";
+//NSString * const IOTArchiveFileName   = @"/IoTstarter.archive";
 /** Application property names */
 NSString * const IOTAuthToken         = @"authtoken";
 NSString * const IOTDeviceID          = @"deviceid";
 NSString * const IOTOrganization      = @"organization";
-
+/*
 // IoT API Constants
 NSString * const IOTDeviceType        = @"iPhone";
 
@@ -111,7 +111,7 @@ NSString * const JSON_BUTTON_A        = @"A";
 NSString * const JSON_BUTTON_B        = @"B";
 NSString * const JSON_BUTTON_X        = @"X";
 NSString * const JSON_BUTTON_Y        = @"Y";
-
+*/
 @end
 
 /*

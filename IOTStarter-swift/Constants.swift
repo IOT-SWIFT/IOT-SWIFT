@@ -7,6 +7,7 @@
 //
 
 import Foundation
+/*
 enum views : Int {
     case LOGIN
     case IOT
@@ -14,7 +15,7 @@ enum views : Int {
     case SETTINGS
     case LOG
     case PROFILES
-}
+}*/
 enum CONNECTION_TYPE : Int {
     case QUICKSTART
     case IOTF

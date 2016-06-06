@@ -7,3 +7,19 @@
 //
 
 import Foundation
+
+class TopicFactory {
+    class func getEventTopic(event: String) -> String {
+        var topicString: String = String(format: GlobalVariable.IOTEventTopic, event, "json")
+        return topicString
+    }
+    /** Retrieve the command topic string for a specific command type.
+     *  @param command The command type to get the topic string for
+     *  @return topicString The command topic string for command
+     */
+    
+    class func getCommandTopic(command: String) -> String {
+        var topicString: String = String(format: GlobalVariable.IOTCommandTopic, command, "json")
+        return topicString
+    }
+}

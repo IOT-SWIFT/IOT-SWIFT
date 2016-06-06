@@ -15,11 +15,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AppDelegate.h"
 #import "MqttOCClient.h"
-#import "TopicFactory.h"
-#import "MessageFactory.h"
-#import "Callbacks.h"
 #import "Trace.h"
 
 #define PAHO_TRACE 0
@@ -33,7 +29,12 @@
 
 - (void)connectWithHost:(NSString *)host
                    port:(int)port
-               clientId:(NSString *)clientId;
+               clientId:(NSString *)clientId
+               userName:(NSString *)userName
+               password:(NSString *)password
+                timeout:(int)timeout
+           cleanSession:(BOOL)cleanSession
+      keepAliveInterval:(int)keepAliveInterval;
 
 - (void)publish:(NSString *)topic
         payload:(NSString *)payload

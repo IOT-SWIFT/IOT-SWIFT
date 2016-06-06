@@ -7,15 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A16F9B211D0574C30095DA6D /* TopicFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16F9B201D0574C30095DA6D /* TopicFactory.swift */; };
 		A1BC6AAA1D015F56000CC75A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BC6AA91D015F56000CC75A /* AppDelegate.swift */; };
 		A1BC6AAC1D015F56000CC75A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BC6AAB1D015F56000CC75A /* ViewController.swift */; };
 		A1BC6AAF1D015F56000CC75A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1BC6AAD1D015F56000CC75A /* Main.storyboard */; };
 		A1BC6AB21D015F56000CC75A /* IOTStarter_swift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A1BC6AB01D015F56000CC75A /* IOTStarter_swift.xcdatamodeld */; };
 		A1BC6AB41D015F56000CC75A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1BC6AB31D015F56000CC75A /* Assets.xcassets */; };
 		A1BC6AB71D015F56000CC75A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1BC6AB51D015F56000CC75A /* LaunchScreen.storyboard */; };
+		A1BC6AC01D018504000CC75A /* libiosMQTT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1BC6ABF1D018504000CC75A /* libiosMQTT.a */; };
+		A1BC6AD31D01886A000CC75A /* Trace.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BC6AC61D01886A000CC75A /* Trace.m */; };
+		A1BC6AD51D01886A000CC75A /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BC6ACA1D01886A000CC75A /* Constants.m */; };
+		A1BC6AD61D01886A000CC75A /* Messenger.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BC6ACC1D01886A000CC75A /* Messenger.m */; };
+		A1BC6AD91D01886A000CC75A /* IoTProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BC6AD11D01886A000CC75A /* IoTProfile.m */; };
+		A1BC6ADD1D03331B000CC75A /* GlobalVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BC6ADC1D03331B000CC75A /* GlobalVariable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A16F9B201D0574C30095DA6D /* TopicFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicFactory.swift; sourceTree = "<group>"; };
 		A1BC6AA61D015F56000CC75A /* IOTStarter-swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IOTStarter-swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1BC6AA91D015F56000CC75A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1BC6AAB1D015F56000CC75A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +32,19 @@
 		A1BC6AB31D015F56000CC75A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1BC6AB61D015F56000CC75A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1BC6AB81D015F56000CC75A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1BC6ABF1D018504000CC75A /* libiosMQTT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiosMQTT.a; sourceTree = "<group>"; };
+		A1BC6AC21D01851B000CC75A /* MqttOCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MqttOCClient.h; sourceTree = "<group>"; };
+		A1BC6AC41D01886A000CC75A /* IOTStarter-swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOTStarter-swift-Bridging-Header.h"; sourceTree = "<group>"; };
+		A1BC6AC51D01886A000CC75A /* Trace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trace.h; sourceTree = "<group>"; };
+		A1BC6AC61D01886A000CC75A /* Trace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trace.m; sourceTree = "<group>"; };
+		A1BC6AC91D01886A000CC75A /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		A1BC6ACA1D01886A000CC75A /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		A1BC6ACB1D01886A000CC75A /* Messenger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Messenger.h; sourceTree = "<group>"; };
+		A1BC6ACC1D01886A000CC75A /* Messenger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Messenger.m; sourceTree = "<group>"; };
+		A1BC6AD11D01886A000CC75A /* IoTProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IoTProfile.m; sourceTree = "<group>"; };
+		A1BC6AD21D01886A000CC75A /* IoTProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IoTProfile.h; sourceTree = "<group>"; };
+		A1BC6ADB1D018936000CC75A /* IOT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOT.h; sourceTree = "<group>"; };
+		A1BC6ADC1D03331B000CC75A /* GlobalVariable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1BC6AC01D018504000CC75A /* libiosMQTT.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +78,10 @@
 		A1BC6AA81D015F56000CC75A /* IOTStarter-swift */ = {
 			isa = PBXGroup;
 			children = (
+				A1BC6ADE1D0344F3000CC75A /* utils_swift */,
+				A1BC6AC31D018845000CC75A /* utils */,
+				A1BC6AC11D018510000CC75A /* include */,
+				A1BC6ABE1D0184F7000CC75A /* lib */,
 				A1BC6AA91D015F56000CC75A /* AppDelegate.swift */,
 				A1BC6AAB1D015F56000CC75A /* ViewController.swift */,
 				A1BC6AAD1D015F56000CC75A /* Main.storyboard */,
@@ -63,8 +89,50 @@
 				A1BC6AB51D015F56000CC75A /* LaunchScreen.storyboard */,
 				A1BC6AB81D015F56000CC75A /* Info.plist */,
 				A1BC6AB01D015F56000CC75A /* IOTStarter_swift.xcdatamodeld */,
+				A1BC6ADC1D03331B000CC75A /* GlobalVariable.swift */,
 			);
 			path = "IOTStarter-swift";
+			sourceTree = "<group>";
+		};
+		A1BC6ABE1D0184F7000CC75A /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				A1BC6ABF1D018504000CC75A /* libiosMQTT.a */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		A1BC6AC11D018510000CC75A /* include */ = {
+			isa = PBXGroup;
+			children = (
+				A1BC6AC21D01851B000CC75A /* MqttOCClient.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		A1BC6AC31D018845000CC75A /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				A1BC6ADB1D018936000CC75A /* IOT.h */,
+				A1BC6AC51D01886A000CC75A /* Trace.h */,
+				A1BC6AC61D01886A000CC75A /* Trace.m */,
+				A1BC6AC91D01886A000CC75A /* Constants.h */,
+				A1BC6ACA1D01886A000CC75A /* Constants.m */,
+				A1BC6ACB1D01886A000CC75A /* Messenger.h */,
+				A1BC6ACC1D01886A000CC75A /* Messenger.m */,
+				A1BC6AD11D01886A000CC75A /* IoTProfile.m */,
+				A1BC6AD21D01886A000CC75A /* IoTProfile.h */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		A1BC6ADE1D0344F3000CC75A /* utils_swift */ = {
+			isa = PBXGroup;
+			children = (
+				A1BC6AC41D01886A000CC75A /* IOTStarter-swift-Bridging-Header.h */,
+				A16F9B201D0574C30095DA6D /* TopicFactory.swift */,
+			);
+			name = utils_swift;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +206,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1BC6AD91D01886A000CC75A /* IoTProfile.m in Sources */,
 				A1BC6AAC1D015F56000CC75A /* ViewController.swift in Sources */,
+				A1BC6AD31D01886A000CC75A /* Trace.m in Sources */,
+				A1BC6AD61D01886A000CC75A /* Messenger.m in Sources */,
+				A1BC6ADD1D03331B000CC75A /* GlobalVariable.swift in Sources */,
 				A1BC6AB21D015F56000CC75A /* IOTStarter_swift.xcdatamodeld in Sources */,
 				A1BC6AAA1D015F56000CC75A /* AppDelegate.swift in Sources */,
+				A16F9B211D0574C30095DA6D /* TopicFactory.swift in Sources */,
+				A1BC6AD51D01886A000CC75A /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,10 +327,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "IOTStarter-swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/IOTStarter-swift",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ibm.th.sd.IOTStarter-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "IOTStarter-swift/IOTStarter-swift-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -264,10 +347,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "IOTStarter-swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/IOTStarter-swift",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ibm.th.sd.IOTStarter-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "IOTStarter-swift/IOTStarter-swift-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -290,6 +381,7 @@
 				A1BC6ABD1D015F56000CC75A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

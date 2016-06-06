@@ -7,15 +7,15 @@
 //
 
 import Foundation
-
-class  Messenger1: NSObject {
+import UIKit
+class  Messenger: NSObject {
     
     var client:MqttClient?
     var tracer:Trace?
     override init() {
         super.init()
         self.client = MqttClient()
-        self.client!.callbacks = GeneralCallbacks()
+        self.client!.callbacks = UIApplication.sharedApplication().delegate as! MqttCallbacks
         self.tracer = Trace(traceLevel:  TraceLevel.Log)
     }
     /** Return the singleton instance of the Messenger object.
@@ -49,20 +49,20 @@ class  Messenger1: NSObject {
      *  @param clientId The MQTT client ID to connect with.
      */
     
-    func connectWithHost(host: String, port: Int32, clientId: String) {
+    func connectWithHost(host: String, port: Int32, clientId: String, userName: String, password: String , timeout: Int32, cleanSession:Bool, keepAliveInterval:Int32) {
         print("%s:%d entered", "connectWithHost", __LINE__)
         if !self.isMqttConnected() {
             //AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
             var opts: ConnectOptions = ConnectOptions()
-            opts.timeout = 5
-            opts.cleanSession = false
-            opts.keepAliveInterval = 30
-            opts.userName = "use-token-auth"
-            opts.password = "999999998"
+            opts.timeout = timeout
+            opts.cleanSession = cleanSession
+            opts.keepAliveInterval = keepAliveInterval
+            opts.userName = userName
+            opts.password = password
             MqttClient.setTrace(self.tracer)
             NSLog("Connecting to IoT Messaging Server\n\thost: %@\n\tport: %d\n\tclientid: %@\n\tusername: %@\n\tpassword: %@", host, port, clientId, opts.userName, opts.password)
             self.client! = MqttClient(host: host, port: port, clientId: clientId)
-            self.client!.connectWithOptions(opts, invocationContext: "connect", onCompletion: InvocationCallbacks())
+            self.client!.connectWithOptions(opts, invocationContext: "connect", onCompletion: UIApplication.sharedApplication().delegate as! InvocationComplete)
         }
     }
     /** Subscribe to topic filter topicFilter at quality of service qos.
@@ -75,7 +75,7 @@ class  Messenger1: NSObject {
         if self.isMqttConnected() {
             print(topicFilter)
             var context: String = "subscribe:".stringByAppendingString(topicFilter)
-            self.client!.subscribe(topicFilter, qos: qos, invocationContext: context, onCompletion: InvocationCallbacks())
+            self.client!.subscribe(topicFilter, qos: qos, invocationContext: context, onCompletion: UIApplication.sharedApplication().delegate as! InvocationComplete)
         }
     }
     /** Unsubscribe from topic filter topicFilter.
@@ -86,7 +86,7 @@ class  Messenger1: NSObject {
         NSLog("%s:%d entered", "unsubscribe", __LINE__)
         if self.isMqttConnected() {
             var context: String = "unsubscribe:".stringByAppendingString(topicFilter)
-            self.client!.unsubscribe(topicFilter, invocationContext: context, onCompletion: InvocationCallbacks())
+            self.client!.unsubscribe(topicFilter, invocationContext: context, onCompletion: UIApplication.sharedApplication().delegate as! InvocationComplete)
         }
     }
     
@@ -96,7 +96,7 @@ class  Messenger1: NSObject {
     func disconnect() {
         NSLog("%s:%d entered", "disconnect", __LINE__)
         if self.isMqttConnected() {
-            self.client!.disconnectWithOptions(nil, invocationContext: "disconnect", onCompletion: InvocationCallbacks())
+            self.client!.disconnectWithOptions(nil, invocationContext: "disconnect", onCompletion: UIApplication.sharedApplication().delegate as! InvocationComplete)
         }
     }
     

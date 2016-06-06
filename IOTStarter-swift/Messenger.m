@@ -12,8 +12,8 @@
 //  Messenger.m
 //  IoTstarter
 //
-
 #import "Messenger.h"
+#import "UIKit/UIKit.h"
 
 @implementation Messenger
 
@@ -22,7 +22,7 @@
     if (self = [super init])
     {
         self.client = [MqttClient alloc];
-        self.client.callbacks = [[GeneralCallbacks alloc] init];
+        self.client.callbacks = [[UIApplication sharedApplication] delegate];
         self.tracer = [[Trace alloc] initWithTraceLevel:2];
     }
     return self;
@@ -63,51 +63,32 @@
 - (void)connectWithHost:(NSString *)host
                    port:(int)port
                clientId:(NSString *)clientId
+               userName:(NSString *)userName
+               password:(NSString *)password
+                timeout:(int)timeout
+           cleanSession:(BOOL)cleanSession
+      keepAliveInterval:(int)keepAliveInterval
 {
     NSLog(@"%s:%d entered", __func__, __LINE__);
     if (![self isMqttConnected])
     {
-        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        //AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         ConnectOptions *opts = [[ConnectOptions alloc] init];
-        opts.timeout = 5;
-        opts.cleanSession = YES;
-        opts.keepAliveInterval = 30;
-        if (appDelegate.connectionType == IOTF)
-        {
-            opts.userName = @"use-token-auth";
-            opts.password = [appDelegate authToken];
-        }
+        opts.timeout = timeout;
+        opts.cleanSession = cleanSession;
+        opts.keepAliveInterval = keepAliveInterval;
+        opts.userName = userName;
+        opts.password = password;
         
         [MqttClient setTrace:self.tracer];
         
         NSLog(@"Connecting to IoT Messaging Server\n\thost: %@\n\tport: %d\n\tclientid: %@\n\tusername: %@\n\tpassword: ********", host, port, clientId, opts.userName);
         self.client = [self.client initWithHost:host port:port clientId:clientId];
         
-        [self.client connectWithOptions:opts invocationContext:@"connect" onCompletion:[[InvocationCallbacks alloc] init]];
+        [self.client connectWithOptions:opts invocationContext:@"connect" onCompletion:[[UIApplication sharedApplication] delegate]];
     }
 }
 
-/** Publish a message to the MQTT server.
- *  @param topic The topic to publish the message to
- *  @param payload The content of the message
- *  @param qos The quality of service to send the message at
- *  @param retained Whether this is a retained message
- */
-- (void)publish:(NSString *)topic
-        payload:(NSString *)payload
-            qos:(int)qos
-       retained:(BOOL)retained
-{
-    NSLog(@"%s:%d entered", __func__, __LINE__);
-    if ([self isMqttConnected])
-    {
-        char *utfPayload = (char *)[payload UTF8String];
-        
-        MqttMessage *msg = [[MqttMessage alloc] initWithMqttMessage:topic payload:utfPayload length:(int)payload.length qos:qos retained:retained duplicate:NO];
-        
-        [self.client send:msg invocationContext:@"publish" onCompletion:[[InvocationCallbacks alloc] init]];
-    }
-}
 
 /** Subscribe to topic filter topicFilter at quality of service qos.
  *  @param topicFilter The MQTT topic filter to subscribe to
@@ -120,7 +101,7 @@
     if ([self isMqttConnected])
     {
         NSString *context = [@"subscribe:" stringByAppendingString:topicFilter];
-        [self.client subscribe:topicFilter qos:qos invocationContext:context onCompletion:[[InvocationCallbacks alloc] init]];
+        [self.client subscribe:topicFilter qos:qos invocationContext:context onCompletion:[[UIApplication sharedApplication] delegate]];
     }
 }
 
@@ -133,7 +114,7 @@
     if ([self isMqttConnected])
     {
         NSString *context = [@"unsubscribe:" stringByAppendingString:topicFilter];
-        [self.client unsubscribe:topicFilter invocationContext:context onCompletion:[[InvocationCallbacks alloc] init]];
+        [self.client unsubscribe:topicFilter invocationContext:context onCompletion:[[UIApplication sharedApplication] delegate]];
     }
 }
 
@@ -144,7 +125,7 @@
     NSLog(@"%s:%d entered", __func__, __LINE__);
     if ([self isMqttConnected])
     {
-        [self.client disconnectWithOptions:nil invocationContext:@"disconnect" onCompletion:[[InvocationCallbacks alloc] init]];
+        [self.client disconnectWithOptions:nil invocationContext:@"disconnect" onCompletion:[[UIApplication sharedApplication] delegate]];
     }
 }
 

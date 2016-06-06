@@ -8,4 +8,15 @@
 
 import Foundation
 
-class Test
+class MySwiftObject : NSObject {
+    
+    var someProperty: AnyObject = "Some Initializer Val"
+    
+    override init() {}
+    
+    func someFunction(someArg:AnyObject) -> String {
+        var returnVal = "You sent me \(someArg)"
+        return returnVal
+    }
+    
+}
