@@ -8,7 +8,7 @@
 
 import Foundation
 
-class  Messenger: NSObject {
+class  Messenger1: NSObject {
     
     var client:MqttClient?
     var tracer:Trace?
@@ -61,7 +61,7 @@ class  Messenger: NSObject {
             opts.password = "999999998"
             MqttClient.setTrace(self.tracer)
             NSLog("Connecting to IoT Messaging Server\n\thost: %@\n\tport: %d\n\tclientid: %@\n\tusername: %@\n\tpassword: %@", host, port, clientId, opts.userName, opts.password)
-            self.client = MqttClient(host: host, port: port, clientId: clientId)
+            self.client! = MqttClient(host: host, port: port, clientId: clientId)
             self.client!.connectWithOptions(opts, invocationContext: "connect", onCompletion: InvocationCallbacks())
         }
     }

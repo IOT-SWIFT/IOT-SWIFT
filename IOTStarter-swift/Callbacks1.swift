@@ -8,7 +8,7 @@
 
 import Foundation
 
-class InvocationCallbacks:NSObject, InvocationComplete {
+class InvocationCallbacks1:NSObject, InvocationComplete {
     func onSuccess(invocationContext: NSObject) {
         print("%s:%d - invocationContext=%@", "onSuccess", __LINE__, invocationContext)
         if (invocationContext.isKindOfClass(MqttClient)) {
@@ -74,7 +74,7 @@ class InvocationCallbacks:NSObject, InvocationComplete {
              
              [appDelegate switchToIoTView];*/
             GlobalVariable.isConnected = true
-            var messenger: Messenger = Messenger.sharedMessenger()
+            var messenger: Messenger = Messenger.sharedMessenger() as! Messenger
             messenger.subscribe(TopicFactory.getCommandTopic("+"), qos: 0)
         })
     }
@@ -98,7 +98,7 @@ class InvocationCallbacks:NSObject, InvocationComplete {
     
 }
 
-class GeneralCallbacks:NSObject, MqttCallbacks{
+class GeneralCallbacks1:NSObject, MqttCallbacks{
     func onConnectionLost(invocationContext: NSObject, errorMessage: String) {
         print("%s:%d entered", "onConnectionLost", __LINE__)
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
