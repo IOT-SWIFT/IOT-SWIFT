@@ -10,7 +10,7 @@ import Foundation
 
 class TopicFactory {
     class func getEventTopic(event: String) -> String {
-        var topicString: String = String(format: GlobalVariable.IOTEventTopic, event, "json")
+        var topicString: String = String(format: GlobalVariable.eventTopic, event, "json")
         return topicString
     }
     /** Retrieve the command topic string for a specific command type.
@@ -19,7 +19,7 @@ class TopicFactory {
      */
     
     class func getCommandTopic(command: String) -> String {
-        var topicString: String = String(format: GlobalVariable.IOTCommandTopic, command, "json")
+        var topicString: String = String(format: GlobalVariable.commandTopic, command, "json")
         return topicString
     }
 }

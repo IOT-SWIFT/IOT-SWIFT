@@ -155,7 +155,7 @@ extension AppDelegate: InvocationComplete {
     func onFailure(invocationContext: NSObject!, errorCode: Int32, errorMessage: String!) {
         print("%@:%d - invocationContext=%@", #function, #line,invocationContext)
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
-            let message: String = "Failed to connect to IoT. Reason Code: \(errorCode)"
+            let message: String = "Failed to connect to IoT. Reason Code: \(errorCode) Error Message : \(errorMessage)"
             print(message)
             self.connectMQTTServer()
         })
@@ -183,8 +183,8 @@ extension AppDelegate: InvocationComplete {
     
     func connectMQTTServer(){
         let messenger: Messenger = Messenger.sharedMessenger() as! Messenger
-        let serverAddress: String = String(format: GlobalVariable.IOTServerAddress, GlobalVariable.organization)
-        let clientID: String = String(format: GlobalVariable.IOTClientID, GlobalVariable.organization, GlobalVariable.IOTDeviceType, GlobalVariable.deviceID)
+        let serverAddress: String = String(format: GlobalVariable.serverAddress, GlobalVariable.organization)
+        let clientID: String = String(format: GlobalVariable.clientID, GlobalVariable.organization, GlobalVariable.deviceType, GlobalVariable.deviceID)
         
         messenger .connectWithHost(serverAddress, port: GlobalVariable.port, clientId: clientID, userName: GlobalVariable.userName , password: GlobalVariable.authToken , timeout: GlobalVariable.timeout, cleanSession: GlobalVariable.cleanSession, keepAliveInterval: GlobalVariable.keepAliveInterval)
     }

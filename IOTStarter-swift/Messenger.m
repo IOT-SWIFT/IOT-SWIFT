@@ -74,13 +74,24 @@
     {
         //AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         ConnectOptions *opts = [[ConnectOptions alloc] init];
+        /*
         opts.timeout = timeout;
         opts.cleanSession = cleanSession;
         opts.keepAliveInterval = keepAliveInterval;
         opts.userName = userName;
         opts.password = password;
-        
+        */
+        NSLog(@"password:%s",password);
+        NSString* pass1 = password;
+        NSString *pass2 = password ;//password;
+        opts.timeout = 10;
+        opts.cleanSession = false;
+        opts.keepAliveInterval = 30;
+        opts.userName = @"use-token-auth";
+        opts.password = pass1;//@"999999998";
         [MqttClient setTrace:self.tracer];
+        
+        
         
         NSLog(@"Connecting to IoT Messaging Server\n\thost: %@\n\tport: %d\n\tclientid: %@\n\tusername: %@\n\tpassword: ********", host, port, clientId, opts.userName);
         self.client = [self.client initWithHost:host port:port clientId:clientId];

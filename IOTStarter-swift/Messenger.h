@@ -17,6 +17,7 @@
 
 #import "MqttOCClient.h"
 #import "Trace.h"
+#import "Constants.h"
 
 #define PAHO_TRACE 0
 
@@ -26,6 +27,8 @@
 @property (strong, nonatomic) id<MqttTraceHandler> tracer;
 
 + (id)sharedMessenger;
+
+- (BOOL)isMqttConnected;
 
 - (void)connectWithHost:(NSString *)host
                    port:(int)port

@@ -23,6 +23,10 @@
 NSString * const IOTAuthToken         = @"authtoken";
 NSString * const IOTDeviceID          = @"deviceid";
 NSString * const IOTOrganization      = @"organization";
+NSString * const IOTServerAddress     = @"%@.messaging.internetofthings.ibmcloud.com";
+int        const IOTServerPort        = 1883;
+// d:org:type:id
+NSString * const IOTClientID          = @"d:%@:%@:%@";
 /*
 // IoT API Constants
 NSString * const IOTDeviceType        = @"iPhone";
